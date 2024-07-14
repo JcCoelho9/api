@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Endpoint para obter uma lista de imagens disponíveis
 app.get('/api/images', (req, res) => {
@@ -15,7 +15,7 @@ app.get('/api/images', (req, res) => {
     }
     const images = files.map(file => ({
       name: file,
-      url: `http://localhost:${port}/api/images/${file}`
+      url: `${req.protocol}://${req.get('host')}/api/images/${file}`
     }));
     res.json(images);
   });
